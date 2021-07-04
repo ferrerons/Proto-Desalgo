@@ -14,8 +14,14 @@ package main;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
 import javax.swing.*;
 //JFrame, JPanel, JCheckBox, GridLayout
+
+import com.mysql.cj.xdevapi.Table;
 
 public class Knapsack implements ActionListener, ItemListener {
     
@@ -26,6 +32,7 @@ public class Knapsack implements ActionListener, ItemListener {
     JPanel panel2;
     JPanel panel3;
     JPanel panel4;
+    JPanel panel5;
 
     //Text Fields
     JTextField txtBudget;
@@ -41,6 +48,7 @@ public class Knapsack implements ActionListener, ItemListener {
 
     //Buttons
     JButton btnBudget;
+    JButton btnHistory;
 
     //Combobox
     JComboBox<String> cmbSelection;
@@ -57,16 +65,17 @@ public class Knapsack implements ActionListener, ItemListener {
 		cont = frame.getContentPane();
 		cont.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
 		panel1 = new JPanel();
+        panel2 = new JPanel(new GridLayout(0, 3, hGap, vGap));
         panel3 = new JPanel(new GridLayout(0, 2, hGap, vGap));
-        panel2 = new JPanel(new GridLayout(0, 2, hGap, vGap));
-        panel4 = new JPanel(new GridLayout(0, 4, hGap, vGap));
+        panel4 = new JPanel();
+        panel5 = new JPanel();
         panel2.setBorder(BorderFactory.createEmptyBorder(hGap, vGap, hGap, vGap));
         panel3.setBorder(BorderFactory.createEmptyBorder(hGap, vGap, hGap, vGap));
-        panel4.setBorder(BorderFactory.createEmptyBorder(hGap, vGap, hGap, vGap));
         frame.add(panel1);
         frame.add(panel2);
         frame.add(panel3);
         frame.add(panel4);
+        frame.add(panel5);
 
         //Panel1
         lblTitle = new JLabel("Knapsack Sulit Ulam Solver");
@@ -75,45 +84,92 @@ public class Knapsack implements ActionListener, ItemListener {
         //Panel2
         lblBudget = new JLabel("Enter budget:");
         txtBudget = new JTextField("", 10);
+        btnBudget = new JButton("Enter");
         panel2.add(lblBudget);
         panel2.add(txtBudget);
+        panel2.add(btnBudget);
+        btnBudget.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                
+            }
+        });
 
         //Panel3
         lblSelection = new JLabel("Selections:");
         cmbSelection = new JComboBox<String>(new String[] {});
         panel3.add(lblSelection);
         panel3.add(cmbSelection);
-        cmbSelection.setEditable(false);
+        cmbSelection.setEnabled(false);
 
         //Panel4
-        lblPrice = new JLabel("Price:");
-        lblWeight = new JLabel("Weight:");
-        txtPrice = new JTextField("", 5);
-        txtWeight = new JTextField("", 5);
-        panel4.add(lblPrice);
-        panel4.add(txtPrice);
-        panel4.add(lblWeight);
-        panel4.add(txtWeight);
-        txtPrice.setEditable(false);
-        txtWeight.setEditable(false);
+        btnHistory = new JButton("History");
+        panel4.add(btnHistory);
+        btnHistory.setEnabled(false);
         
         frame.pack();
 		frame.setVisible(true);
+        frame.setResizable(false);
+    }
+    
+    public static Connection getConnection() throws Exception {
+        
+        try {
+            String driver = "com.sql.jdbc.Driver";
+            String url = "jdbc:mysql://localhost:3306/database";
+            String username = "Albedo";
+            String password = "SolarIsotoma";
+            Class.forName(driver);
+
+            Connection conn = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection Success!");
+
+            return conn;
+        } catch(Exception e) {
+            e.getStackTrace();
+        }
+        
+        return null;
     }
 
+    public static void createTable() throws Exception {
+        try {
+            Connection con = getConnection();
+            PreparedStatement create = con.prepareStatement("CREATE TABLE IF NOT EXIST ulam(id int NOT NULL AUTO_INCREMENT, name VARCHAR(25), PRIMARY KEY (id))");
+            create.executeUpdate();
+
+            System.out.println("Table Creation Success!");
+        } catch(Exception e){
+            e.getStackTrace();
+        }
+    }
+
+    public static Table getTable() throws Exception {
+        try {
+            Connection con = getConnection();
+            PreparedStatement create = con.prepareStatement("SELECT id FROM database");
+            create.executeQuery();
+
+        } catch(Exception e) {
+            
+        }
+        
+        return null;
+    }
+
+
     public static void main(String[] args) throws Exception {
+        createTable();
+
         new Knapsack();
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
         
     }
 }
