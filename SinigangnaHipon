@@ -1,0 +1,82 @@
+package com.activity;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class SinigangnaHipon {
+
+    public static void main(String[] args) throws IOException {
+        //User input
+        double Budget;
+        //Output ingredients
+        String ingredient[] = new String[9];
+        //Output prices
+        String unit[] = new String[9];
+        double[] price;
+        price = new double[10];
+        double[] weight;
+        weight = new double[10];
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Budget Optimizer");
+        System.out.println("Input Your Budget");
+        Budget = Double.parseDouble(bf.readLine());
+        System.out.println(Budget);
+        if (Budget > 180.00) {
+            System.out.println("Choices");
+            System.out.println("Sinigang na Hipon");
+            int ctr = 0;
+            // double SNHBudget = 180.00f;
+            //String SNHname[] = {"Sinigang na Hipon"};
+            String SNHi[] = {"Hipon","Sweet potato leave", "Sibuyas", "Kamatis", "Sinigang Sampalok Mix", "Sili", "Sitaw", "Okra", "Talong"};
+            String SNHu[] = {"kg", "g", "g", "g", "g", "g", "g", "g", "g"};
+            double[] SNHp;
+            SNHp = new double[10];
+            SNHp[0] = 90.00f;
+            SNHp[1] = 20.00f;
+            SNHp[2] = 19.84f;
+            SNHp[3] = 15.f;
+            SNHp[4] = 32.f;
+            SNHp[5] = 10.f;
+            SNHp[6] = 20.f;
+            SNHp[7] = 10.f;
+            SNHp[8] = 20.f;
+            double[] SNHw;
+            SNHw = new double[10];
+            SNHw[0] = .25f;
+            SNHw[1] = 200f;
+            SNHw[2] = 200.f;
+            SNHw[3] = 200.f;
+            SNHw[4] = 22.f;
+            SNHw[5] = 200.f;
+            SNHw[6] = 250.f;
+            SNHw[7] = 200.f;
+            SNHw[8] = 150.f;
+
+
+            while (Budget > SNHp[ctr]) {
+                //put the ingredient in the bag
+                ingredient[ctr] = SNHi[ctr];
+                price[ctr] += SNHp[ctr];
+                weight[ctr] += SNHw[ctr];
+                unit[ctr] = SNHu[ctr];
+                Budget = Budget - SNHp[ctr];
+                ctr++;
+                ctr %= 9;// for relooping
+            }
+            price[ctr] += Budget;
+            weight[ctr] += (Budget/SNHp[ctr])*SNHw[ctr];
+            ingredient[ctr]=SNHi[ctr];
+            unit[ctr]=SNHu[ctr];
+            for (int i = 0; 0 < 9; i++) {
+                System.out.println(ingredient[i]);
+                System.out.println(weight[i]);
+                System.out.println(unit[i]);
+                System.out.println(price[i]);
+
+            }
+        }
+    }
+}
+
