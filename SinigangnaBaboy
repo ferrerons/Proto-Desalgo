@@ -1,0 +1,81 @@
+package com.activity;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class SinigangnaBaboy {
+
+    public static void main(String[] args) throws IOException {
+        //User input
+        double Budget;
+        //Output ingredients
+        String ingredient[] = new String[9];
+        //Output prices
+        String unit[] = new String[9];
+        double[] price;
+        price = new double[10];
+        double[] weight;
+        weight = new double[10];
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Budget Optimizer");
+        System.out.println("Input Your Budget");
+        Budget = Double.parseDouble(bf.readLine());
+        System.out.println(Budget);
+        if (Budget > 150.00) {
+            System.out.println("Choices");
+            System.out.println("Sinigang na Baboy");
+            int ctr = 0;
+            //double SNBBudget = 150.00f;
+            //String SNBname[] = {"Sinigang na Baboy"};
+            String SNBi[] = {"Baboy", "Sibuyas", "Kamatis","Kangkong", "Sinigang Sampalok Mix", "Sili", "Sitaw", "Okra", "Talong"};
+            String SNBu[] = {"kg", "g", "g", "g", "g", "g", "g", "g", "g"};
+            double[] SNBp;
+            SNBp = new double[10];
+            SNBp[0] = 55.44f;
+            SNBp[1] = 19.84f;
+            SNBp[2] = 15.f;
+            SNBp[3] = 12.88f;
+            SNBp[4] = 32.f;
+            SNBp[5] = 10.f;
+            SNBp[6] = 20.f;
+            SNBp[7] = 10.f;
+            SNBp[8] = 20.f;
+            double[] SNBw;
+            SNBw = new double[10];
+            SNBw[0] = .25f;
+            SNBw[1] = 200f;
+            SNBw[2] = 200.f;
+            SNBw[3] = 300.f;
+            SNBw[4] = 22.f;
+            SNBw[5] = 200.f;
+            SNBw[6] = 250.f;
+            SNBw[7] = 200.f;
+            SNBw[8] = 150.f;
+
+
+            while (Budget > SNBp[ctr]) {
+                //put the ingredient in the bag
+                ingredient[ctr] = SNBi[ctr];
+                price[ctr] += SNBp[ctr];
+                weight[ctr] += SNBw[ctr];
+                unit[ctr] = SNBu[ctr];
+                Budget = Budget - SNBp[ctr];
+                ctr++;
+                ctr %= 9;// for relooping
+            }
+            price[ctr] += Budget;
+            weight[ctr] += (Budget/SNBp[ctr])*SNBw[ctr];
+            ingredient[ctr]=SNBi[ctr];
+            unit[ctr]=SNBu[ctr];
+            for (int i = 0; 0 < 9; i++) {
+                System.out.println(ingredient[i]);
+                System.out.println(weight[i]);
+                System.out.println(unit[i]);
+                System.out.println(price[i]);
+
+            }
+        }
+    }
+}
